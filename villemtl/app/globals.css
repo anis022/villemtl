@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+/* Ville de Montréal brand typeface, self-hosted from montreal.ca. */
+@font-face {
+  font-family: "Montreal";
+  src: url("/fonts/Montreal-Web-Regulier.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montreal";
+  src: url("/fonts/Montreal-Web-Gras.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Design tokens read off montreal.ca */
+  --vdm-green: #097d6c;
+  --vdm-green-dark: #076456;
+  --vdm-text: #212529;
+  --vdm-muted: #637381;
+  --vdm-border: #ced4da;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* Same stack montreal.ca declares. */
+  font-family: "Montreal", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Keeps focused/anchored elements clear of the sticky masthead.
+   --masthead-h must match the rendered height of `.sticky` in SiteHeader
+   (32px utility bar + the white nav, which is sized by the logo). If the logo
+   height changes, update this. */
+:root {
+  --masthead-h: 125px;
+}
+
+html {
+  scroll-padding-top: calc(var(--masthead-h) + 16px);
+}
+
+/* Focus indicator, copied exactly from montreal.ca:
+     box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0079c4
+   A 2px white ring separates the element from a 4px blue ring, and it hangs
+   off `:focus` — not `:focus-visible` — so it appears on mouse clicks too,
+   which is the behaviour on the real site. The shadow follows each element's
+   own border-radius. Never replace this with a bare `outline: none`. */
+a,
+button,
+input,
+select,
+textarea,
+summary,
+[tabindex] {
+  /* montreal.ca fades the ring in and out rather than snapping it. */
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+summary:focus,
+[tabindex]:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 4px #0079c4;
+}
+
+/* Auth dialog: fade in the blurred overlay, lift the panel.
+   `allow-discrete` + `@starting-style` let the native <dialog> animate
+   in and out of the top layer instead of popping. */
+.auth-dialog {
+  opacity: 0;
+  transition:
+    opacity 200ms ease-out,
+    display 200ms allow-discrete,
+    overlay 200ms allow-discrete;
+}
+
+.auth-dialog[open]:not([data-closing]) {
+  opacity: 1;
+}
+
+@starting-style {
+  .auth-dialog[open] {
+    opacity: 0;
+  }
+}
+
+/* The dialog covers the viewport, so `::backdrop` only needs to stay clear. */
+.auth-dialog::backdrop {
+  background: transparent;
+}
+
+/* Blurring the page content is ~6x cheaper than a full-viewport
+   `backdrop-filter`, which re-samples the backdrop every frame and drags
+   the whole page down to ~8fps for as long as the modal is open. */
+/* Deliberately NOT transitioned. Animating `filter` re-rasterizes the whole
+   page at a new radius every frame; applied as a static value it rasterizes
+   once and is cached. The overlay's fade covers the snap visually. */
+#page-root.is-blurred {
+  filter: blur(3px);
+}
+
+.auth-overlay {
+  background: rgb(33 33 33 / 0.4);
+}
+
+.auth-panel-shell {
+  translate: 0 1rem;
+  scale: 0.97;
+  transition:
+    translate 200ms ease-out,
+    scale 200ms ease-out,
+    height 300ms ease-out;
+}
+
+.auth-dialog[open]:not([data-closing]) .auth-panel-shell {
+  translate: 0 0;
+  scale: 1;
+}
+
+@starting-style {
+  .auth-dialog[open] .auth-panel-shell {
+    translate: 0 1rem;
+    scale: 0.97;
+  }
+}
+
+/* Mega-menu panel. montreal.ca centres it in the viewport (measured:
+   left 484px at a 2048px viewport for a 1080px panel — dead centre) and
+   drops it from the bottom edge of the header.
+   The centring translate lives in the keyframes because an animation's
+   transform would otherwise override a separate translate utility. */
+.menu-panel {
+  transform: translateX(-50%);
+  animation: menu-drop 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform-origin: top center;
+}
+
+@keyframes menu-drop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.search-spinner {
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Search results stagger in. There is deliberately no dimming of the list
+   while the query runs: the spinner in the search field is the progress cue,
+   and a half-faded page reads as broken rather than busy. */
+.result-item {
+  animation: result-in 260ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes result-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Crossfade when swapping between the sign-in and sign-up panels. */
+.auth-panel {
+  animation: auth-panel-in 250ms ease-out;
+}
+
+@keyframes auth-panel-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-root,
+  .menu-panel,
+  .search-spinner,
+  .result-item,
+  .auth-dialog,
+  .auth-panel-shell,
+  .auth-panel {
+    transition-duration: 1ms;
+    animation-duration: 1ms;
+  }
+}
