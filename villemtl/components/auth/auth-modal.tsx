@@ -198,11 +198,11 @@ export function AuthModal({
         >
           <div ref={panelRef} key={view} className="auth-panel">
           {/* Brand bar, echoing the site header. */}
-          <div className="flex items-center justify-center border-b border-[#ced4da] px-8 py-5">
+          <div className="flex items-center justify-center border-b border-[#ced4da] px-6 py-5 md:px-8">
             <Image src="/logo-montreal.png" alt="Ville de Montréal" width={112} height={40} />
           </div>
 
-          <div className="px-8 py-7">
+          <div className="px-6 py-7 md:px-8">
           {view === "confirm" ? (
             <>
               <h2 id="auth-modal-title" className="text-[24px] font-bold leading-[32px]">
@@ -226,7 +226,7 @@ export function AuthModal({
 
               <form onSubmit={submit} noValidate className="mt-6">
                 {view === "signup" && (
-                  <div className="mb-5 grid grid-cols-2 gap-4">
+                  <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="auth-first-name" className={LABEL}>
                         {t.auth.firstName}

@@ -62,11 +62,18 @@ export function MainMenu({ lang, labels }: { lang: Locale; labels: Labels }) {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls="main-menu-panel"
-        className={`flex h-10 items-center gap-3 rounded-[4px] px-3 text-[16px] font-bold leading-[24px] transition-colors ${
+        aria-label={labels.menu}
+        className={`flex h-10 items-center gap-2 rounded-[4px] px-2 text-[16px] font-bold leading-[24px] transition-colors md:gap-3 md:px-3 ${
           open ? "text-[#097d6c]" : "text-[#212529] hover:text-[#097d6c]"
         }`}
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          className="shrink-0"
+        >
           <path
             d="M3 6.5h18M3 12h18M3 17.5h18"
             stroke="currentColor"
@@ -74,7 +81,7 @@ export function MainMenu({ lang, labels }: { lang: Locale; labels: Labels }) {
             strokeLinecap="round"
           />
         </svg>
-        {labels.menu}
+        <span className="hidden sm:inline">{labels.menu}</span>
       </button>
 
       {open && (

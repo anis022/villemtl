@@ -9,10 +9,31 @@ import { AuthModal } from "./auth-modal";
 
 function PersonIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" className="shrink-0">
       <circle cx="12" cy="12" r="9.2" stroke="currentColor" strokeWidth="1.6" />
       <circle cx="12" cy="10" r="3.1" stroke="currentColor" strokeWidth="1.6" />
       <path d="M6.2 19.2a6.2 6.2 0 0 1 11.6 0" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function LogoutIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" className="shrink-0">
+      <path
+        d="M14 7V5.5A1.5 1.5 0 0 0 12.5 4h-6A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20h6a1.5 1.5 0 0 0 1.5-1.5V17"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 12h10m0 0-3-3m3 3-3 3"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -50,20 +71,24 @@ export function AccountButton({
     router.refresh();
   };
 
+  // On phones the name and the "sign out" label hide, leaving two tappable
+  // icons (identity + sign-out) so the row fits without overflow.
   if (user) {
     const name = [user.firstName, user.lastName].filter(Boolean).join(" ") || user.email;
     return (
-      <div className="flex items-center gap-6">
-        <span className="flex h-10 items-center gap-2 text-[16px] font-bold leading-[24px] text-[#212529]">
+      <div className="flex items-center gap-1 md:gap-4">
+        <span className="flex h-10 items-center gap-2 px-1 text-[16px] font-bold leading-[24px] text-[#212529]">
           <PersonIcon />
-          {name}
+          <span className="hidden max-w-[16ch] truncate lg:inline">{name}</span>
         </span>
         <button
           type="button"
           onClick={signOut}
-          className="rounded-[4px] px-3 py-1 text-[16px] font-bold leading-[24px] text-[#097d6c] hover:underline"
+          aria-label={t.header.signOut}
+          className="flex h-10 items-center gap-2 rounded-[4px] px-2 text-[16px] font-bold leading-[24px] text-[#097d6c] hover:underline md:px-3"
         >
-          {t.header.signOut}
+          <LogoutIcon />
+          <span className="hidden md:inline">{t.header.signOut}</span>
         </button>
       </div>
     );
@@ -74,10 +99,11 @@ export function AccountButton({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex h-10 items-center gap-2 rounded-[4px] px-3 text-[16px] font-bold leading-[24px] text-[#212529] hover:underline"
+        aria-label={t.header.account}
+        className="flex h-10 items-center gap-2 rounded-[4px] px-2 text-[16px] font-bold leading-[24px] text-[#212529] hover:underline md:px-3"
       >
         <PersonIcon />
-        {t.header.account}
+        <span className="hidden md:inline">{t.header.account}</span>
       </button>
       <AuthModal open={open} onClose={() => setOpen(false)} lang={lang} />
     </>

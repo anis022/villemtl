@@ -21,8 +21,10 @@ export default async function ProjectsPage({
       <SiteHeader user={user} lang={lang} />
 
       <div className={HERO_BAND}>
-        <div className={`${CONTAINER} py-12`}>
-          <h1 className="text-[40px] font-bold leading-[56px]">{t.pages.projectsTitle}</h1>
+        <div className={`${CONTAINER} py-8 md:py-12`}>
+          <h1 className="text-[28px] font-bold leading-[36px] md:text-[40px] md:leading-[56px]">
+            {t.pages.projectsTitle}
+          </h1>
           <p className={`mt-3 max-w-[640px] text-[16px] leading-[24px] ${MUTED}`}>
             {t.pages.projectsIntro}
           </p>

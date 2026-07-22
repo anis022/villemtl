@@ -26,18 +26,20 @@ export default async function NewIssuePage({
       <SiteHeader user={user} lang={lang} />
 
       <div className={HERO_BAND}>
-        <div className={`${CONTAINER} py-10`}>
+        <div className={`${CONTAINER} py-8 md:py-10`}>
           <Link href={`/${lang}`} className="text-[14px] font-bold text-[#097d6c] hover:underline">
             {t.issue.back}
           </Link>
-          <h1 className="mt-3 text-[40px] font-bold leading-[56px]">{t.issue.newTitle}</h1>
+          <h1 className="mt-3 text-[28px] font-bold leading-[36px] md:text-[40px] md:leading-[56px]">
+            {t.issue.newTitle}
+          </h1>
           <p className={`mt-2 max-w-[640px] text-[16px] leading-[24px] ${MUTED}`}>
             {t.issue.newSubtitle}
           </p>
         </div>
       </div>
 
-      <main className={`${CONTAINER} flex-1 py-10`}>
+      <main className={`${CONTAINER} flex-1 py-8 md:py-10`}>
         <NewIssueForm lang={lang} />
       </main>
       <SiteFooter lang={lang} />

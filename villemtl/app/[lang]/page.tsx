@@ -49,9 +49,11 @@ export default async function Home({
 
       {/* Grey heading band, as on montreal.ca */}
       <div className={HERO_BAND}>
-        <div className={`${CONTAINER} py-12`}>
-          <p className="text-[20px] font-bold leading-[28px]">{t.home.welcome}</p>
-          <h1 className="mt-2 max-w-[860px] text-[40px] font-bold leading-[56px]">
+        <div className={`${CONTAINER} py-8 md:py-12`}>
+          <p className="text-[18px] font-bold leading-[26px] md:text-[20px] md:leading-[28px]">
+            {t.home.welcome}
+          </p>
+          <h1 className="mt-2 max-w-[860px] text-[28px] font-bold leading-[36px] md:text-[40px] md:leading-[56px]">
             {t.home.title}
           </h1>
           <p className={`mt-4 max-w-[780px] text-[16px] leading-[24px] ${MUTED}`}>
@@ -69,9 +71,9 @@ export default async function Home({
         </div>
       </div>
 
-      <main className={`${CONTAINER} flex-1 py-12`}>
-        <div className="flex flex-wrap items-end justify-between gap-4 border-b-[0.8px] border-[#ced4da] pb-4">
-          <h2 className="text-[32px] font-bold leading-[40px]">
+      <main className={`${CONTAINER} flex-1 py-8 md:py-12`}>
+        <div className="flex flex-wrap items-end justify-between gap-3 border-b-[0.8px] border-[#ced4da] pb-4">
+          <h2 className="text-[24px] font-bold leading-[32px] md:text-[32px] md:leading-[40px]">
             {sort === "top" ? t.home.topTitle : t.home.newTitle}
           </h2>
 

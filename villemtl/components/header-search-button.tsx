@@ -24,13 +24,14 @@ export function HeaderSearchButton({ lang, label }: { lang: Locale; label: strin
     <button
       type="button"
       onClick={activate}
-      className="flex h-10 items-center gap-2 rounded-[4px] px-3 text-[16px] font-bold leading-[24px] text-[#212529] hover:text-[#097d6c]"
+      aria-label={label}
+      className="flex h-10 items-center gap-2 rounded-[4px] px-2 text-[16px] font-bold leading-[24px] text-[#212529] hover:text-[#097d6c] md:px-3"
     >
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" className="shrink-0">
         <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" strokeWidth="1.7" />
         <path d="M15.5 15.5L21 21" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
       </svg>
-      {label}
+      <span className="hidden md:inline">{label}</span>
     </button>
   );
 }

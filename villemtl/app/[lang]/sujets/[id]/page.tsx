@@ -37,18 +37,18 @@ export default async function IssuePage({
     <div className="flex min-h-screen flex-col bg-white text-[#212529]">
       <SiteHeader user={user} lang={lang} />
 
-      <main className={`${CONTAINER} flex-1 py-10`}>
+      <main className={`${CONTAINER} flex-1 py-8 md:py-10`}>
         <Link href={`/${lang}`} className="text-[14px] font-bold text-[#097d6c] hover:underline">
           {t.issue.back}
         </Link>
 
-        <article className={`${CARD} mt-4 p-6`}>
+        <article className={`${CARD} mt-4 p-4 md:p-6`}>
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <CategoryTag category={issue.category} lang={lang} />
             <StatusTag status={issue.status} lang={lang} />
           </div>
 
-          <div className="flex gap-5">
+          <div className="flex gap-3 md:gap-5">
             <VoteButton
               issueId={issue.id}
               voteCount={issue.voteCount}
@@ -58,7 +58,9 @@ export default async function IssuePage({
             />
 
             <div className="min-w-0 flex-1">
-              <h1 className="text-[32px] font-bold leading-[40px]">{issue.title}</h1>
+              <h1 className="text-[24px] font-bold leading-[32px] break-words md:text-[32px] md:leading-[40px]">
+                {issue.title}
+              </h1>
 
               <div className={`mt-2 flex flex-wrap items-center gap-2 text-[14px] ${MUTED}`}>
                 <span className="inline-flex items-center gap-1.5 font-bold text-[#212529]">
@@ -69,7 +71,9 @@ export default async function IssuePage({
                 <span>{formatDate(issue.createdAt, lang)}</span>
               </div>
 
-              <p className="mt-4 whitespace-pre-wrap text-[17px] leading-[27px]">{issue.body}</p>
+              <p className="mt-4 whitespace-pre-wrap break-words text-[17px] leading-[27px]">
+                {issue.body}
+              </p>
 
               {issue.imageUrl && (
                 <Image
@@ -87,7 +91,7 @@ export default async function IssuePage({
         </article>
 
         <section className="mt-10">
-          <h2 className="border-b-[0.8px] border-[#ced4da] pb-4 text-[32px] font-bold leading-[40px]">
+          <h2 className="border-b-[0.8px] border-[#ced4da] pb-4 text-[24px] font-bold leading-[32px] md:text-[32px] md:leading-[40px]">
             {issue.commentCount}{" "}
             {issue.commentCount === 1 ? t.issue.replyOne : t.issue.replyMany}
           </h2>
@@ -121,7 +125,7 @@ export default async function IssuePage({
                   </p>
                 )}
 
-                <p className="whitespace-pre-wrap leading-[26px]">{comment.body}</p>
+                <p className="whitespace-pre-wrap break-words leading-[26px]">{comment.body}</p>
               </article>
             ))}
           </div>

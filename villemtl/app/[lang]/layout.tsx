@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
@@ -17,6 +17,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Forum — Côte-des-Neiges–Notre-Dame-de-Grâce",
   description: "Forum citoyen de l'arrondissement",
+};
+
+// Explicit so mobile browsers render at device width (base of all responsive
+// layout — without it phones render the page at ~980px and zoom out).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export function generateStaticParams() {

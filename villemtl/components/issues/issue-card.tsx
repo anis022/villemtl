@@ -33,7 +33,7 @@ export function IssueCard({
           <StatusTag status={issue.status} lang={lang} />
         </div>
 
-        <h3 className="text-[18px] font-bold leading-[26px]">
+        <h3 className="text-[18px] font-bold leading-[26px] break-words">
           <Link href={`/${lang}/sujets/${issue.id}`} className="hover:underline">
             {issue.title}
           </Link>
